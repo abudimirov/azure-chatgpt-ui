@@ -6,6 +6,7 @@
     </div>
   </form>
   <button @click="getResponse" class="btn btn-primary mb-5">Send</button>
+  <button @click="cleanContext" class="btn btn-danger mb-5">Clean context</button>
   <div v-if="isLoading">Loading....</div>
   <div v-if="gptResponse" class="card">
     <div class="card-body">
@@ -41,6 +42,15 @@ export default {
       } catch (error) {
         console.log(error);
         this.isLoading = false;
+      }
+    },
+    async cleanContext() {
+      try {
+        await axios.delete(`${this.backendUrl}/clean`)
+        this.gptResponse = '';
+        alert("Context is flushed!");
+      } catch (error) {
+        console.log(error);
       }
     }
   }
